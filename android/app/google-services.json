@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017369255430",
+    "project_id": "vini-chat-21cf9",
+    "storage_bucket": "vini-chat-21cf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017369255430:android:3d3e80df8110424b52ad87",
+        "android_client_info": {
+          "package_name": "br.com.vini.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017369255430-ae6f0q9eaur4rkvvh15ids7dge6l8m44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_oodGTsU7d4AtNBklAfVpRZXIJ_j3oqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017369255430-ae6f0q9eaur4rkvvh15ids7dge6l8m44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
