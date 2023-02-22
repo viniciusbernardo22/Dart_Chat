@@ -66,6 +66,7 @@ class AuthFirebaseService implements AuthService {
     if (image == null) return null;
 
     final storage = FirebaseStorage.instance;
+
     final imageRef = storage.ref().child('user_images').child(imageName);
     await imageRef.putFile(image).whenComplete(() {});
     return await imageRef.getDownloadURL();
