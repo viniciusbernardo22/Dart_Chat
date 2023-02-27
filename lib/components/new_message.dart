@@ -15,11 +15,10 @@ class _NewMessageState extends State<NewMessage> {
 
   Future<void> _sendMessage() async {
     final user = AuthService().currentUser;
-    print(' message : ${_message}');
-    print(' controller: ${_messageController.text}');
 
     if (user != null) {
-      ChatService().save(_message, user);
+      final msg = await ChatService().save(_message, user);
+      print(msg?.id);
       _messageController.clear();
     }
   }

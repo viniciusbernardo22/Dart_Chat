@@ -10,11 +10,9 @@ class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = AuthService().currentUser;
-    print(currentUser?.id);
     return StreamBuilder<List<ChatMessage>>(
       stream: ChatService().messagesStream(),
       builder: (ctx, snapshot) {
-        print(snapshot.hasData);
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(),

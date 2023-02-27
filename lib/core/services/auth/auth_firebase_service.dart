@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:chat/core/models/chat_user.dart';
 import 'package:chat/core/services/auth/auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -45,8 +46,12 @@ class AuthFirebaseService implements AuthService {
     final imageURL = await _uploadUserImage(image, imageName);
 
     // 2. atualizar os atributos do usuário
-    credential.user?.updateDisplayName(name);
-    credential.user?.updatePhotoURL(imageURL);
+    await credential.user?.updateDisplayName(name);
+    await credential.user?.updatePhotoURL(imageURL);
+
+    // 3. salvar usuario no banco de dados (opcional)
+    _currentUser = _toChatUser(credential.user!, name, imageURL);
+    await _saveChatUser(_currentUser!);
   }
 
   @override
@@ -72,12 +77,25 @@ class AuthFirebaseService implements AuthService {
     return await imageRef.getDownloadURL();
   }
 
-  static ChatUser _toChatUser(User user) {
+  Future<void> _saveChatUser(ChatUser user) async {
+    //Pega instancia do Firestore
+    final store = FirebaseFirestore.instance;
+    //Store cria uma coleção (users) e depois dá o nome para essa coleção do id de usuario cadastrado.
+    final docRef = store.collection('users').doc(user.id);
+    //Aguardar o docref setar um json dentro dessa coleção que é as informações desse determinado usuario.
+    await docRef.set({
+      'name': user.name,
+      'ImageURL': user.imageURL,
+      'email': user.email,
+    });
+  }
+
+  static ChatUser _toChatUser(User user, [String? name, String? imageURL]) {
     return ChatUser(
       id: user.uid,
-      name: user.displayName ?? user.email!.split('@')[0],
+      name: name ?? user.displayName ?? user.email!.split('@')[0],
       email: user.email!,
-      imageURL: user.photoURL ?? 'assets/images/avatar.png',
+      imageURL: imageURL ?? user.photoURL ?? 'assets/images/avatar.png',
     );
   }
 }
