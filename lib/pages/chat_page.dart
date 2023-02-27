@@ -19,7 +19,7 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'ViniChat',
+          'Chat',
         ),
         actions: [
           DropdownButtonHideUnderline(
